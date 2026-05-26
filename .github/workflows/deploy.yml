@@ -236,8 +236,13 @@ jobs:
       
       - name: Get container URL
         run: |
-          CONTAINER_URL=$(yc serverless container get ${{ secrets.YC_CONTAINER_NAME }} --format json | jq -r '.status.url')
-          echo "✅ Backend deployed at: $CONTAINER_URL"
+          # Выводим весь JSON, чтобы увидеть структуру в логах, если упадет
+          yc serverless container get ${{ secrets.YC_CONTAINER_NAME }} --format json > container_info.json
+          cat container_info.json
+          
+          # Берем URL более простым способом, если он есть в ответе
+          URL=$(jq -r '.url // .status.url // "URL_NOT_FOUND"' container_info.json)
+          echo "Container URL: $URL"
       
       - name: Health check
         run: |

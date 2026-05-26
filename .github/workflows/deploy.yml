@@ -236,13 +236,16 @@ jobs:
       
       - name: Get container URL
         run: |
-          # Выводим весь JSON, чтобы увидеть структуру в логах, если упадет
-          yc serverless container get ${{ secrets.YC_CONTAINER_NAME }} --format json > container_info.json
-          cat container_info.json
+          # Получаем информацию и выводим её для отладки
+          INFO=$(yc serverless container get ${{ secrets.YC_CONTAINER_NAME }} --format json)
+          echo $INFO | jq '.'
           
-          # Берем URL более простым способом, если он есть в ответе
-          URL=$(jq -r '.url // .status.url // "URL_NOT_FOUND"' container_info.json)
+          # Пытаемся достать URL из разных возможных мест
+          # Обычно это .url или .status.url
+          URL=$(echo $INFO | jq -r '.url // .status.url // "URL_NOT_FOUND"')
+          
           echo "Container URL: $URL"
+          echo "CONTAINER_URL=$URL" >> $GITHUB_ENV
       
       - name: Health check
         run: |

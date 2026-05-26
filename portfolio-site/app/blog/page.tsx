@@ -1,0 +1,32 @@
+import Link from 'next/link'
+import { blogPosts } from './data'
+
+async function getBooks() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books`);
+  if (!res.ok) throw new Error('Failed to fetch');
+  return res.json();
+}
+
+export default function BlogPage() {
+  return (
+    <div className="py-8">
+      <h1 className="text-3xl font-bold mb-8">Блог</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {blogPosts.map((post) => (
+          <div key={post.id} className="bg-white p-6 rounded-lg shadow-md border">
+            <h2 className="text-xl font-semibold mb-2">
+              <Link href={`/blog/${post.slug}`} className="text-blue-600 hover:underline">
+                {post.title}
+              </Link>
+            </h2>
+            <p className="text-gray-600 mb-3">{post.excerpt}</p>
+            <div className="flex justify-between text-sm text-gray-500">
+              <span>{post.date}</span>
+              <span>{post.author}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

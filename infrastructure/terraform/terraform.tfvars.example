@@ -1,0 +1,5 @@
+cloud_id   = "b1gdvokitbmjjql9edom"
+folder_id  = "b1g62gu3bv00dmc7ilo7"
+network_id = "enp0dr1bvukbo1n7jepo"
+subnet_id  = "e9blqg88ca3js80l2p76"
+db_password = "SecurePassword123"

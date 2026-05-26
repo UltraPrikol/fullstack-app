@@ -221,6 +221,9 @@ jobs:
       
       - name: Deploy container to Cloud Run
         run: |
+          # Вытаскиваем ID сервисного аккаунта из файла ключа с помощью jq
+          SA_ID=$(jq -r .service_account_id key.json)
+          
           yc serverless container revision deploy \
             --container-name ${{ secrets.YC_CONTAINER_NAME }} \
             --image cr.yandex/${{ secrets.YC_REGISTRY_ID }}/book-api:latest \
@@ -228,7 +231,8 @@ jobs:
             --memory 512MB \
             --execution-timeout 30s \
             --concurrency 10 \
-            --environment DATABASE_URL="${{ secrets.DB_URL }}",CORS_ORIGINS="${{ secrets.CORS_ORIGINS }}"
+            --service-account-id $SA_ID \
+            --environment DATABASE_URL="${{ secrets.DB_URL }}"
       
       - name: Get container URL
         run: |

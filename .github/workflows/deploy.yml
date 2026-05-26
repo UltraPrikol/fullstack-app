@@ -228,9 +228,7 @@ jobs:
             --memory 512MB \
             --execution-timeout 30s \
             --concurrency 10 \
-            --environment \
-              DATABASE_URL="${{ secrets.DB_URL }}",\
-              CORS_ORIGINS="${{ secrets.CORS_ORIGINS }}"
+            --environment DATABASE_URL="${{ secrets.DB_URL }}",CORS_ORIGINS="${{ secrets.CORS_ORIGINS }}"
       
       - name: Get container URL
         run: |

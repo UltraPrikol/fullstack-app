@@ -261,20 +261,20 @@ jobs:
             echo "message=❌ Deployment failed. Check GitHub Actions logs." >> $GITHUB_OUTPUT
           fi
       
-      - name: Send Telegram notification (optional)
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🚀 Deployment Status
+      # - name: Send Telegram notification (optional)
+      #   if: success() && secrets.TELEGRAM_BOT_TOKEN != ''
+      #   uses: appleboy/telegram-action@master
+      #   with:
+      #     to: ${{ secrets.TELEGRAM_CHAT_ID }}
+      #     token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      #     message: |
+      #       🚀 Deployment Status
             
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
+      #       Repository: ${{ github.repository }}
+      #       Branch: ${{ github.ref_name }}
+      #       Commit: ${{ github.sha }}
+      #       Author: ${{ github.actor }}
             
-            ${{ steps.status.outputs.message }}
+      #       ${{ steps.status.outputs.message }}
             
-            See: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #       See: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

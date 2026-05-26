@@ -1,5 +1,5 @@
-// import Link from 'next/link'
-// import { blogPosts } from './data'
+import Link from 'next/link'
+import { blogPosts } from './data'
 
 // async function getBooks() {
 //   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books`);
